@@ -6,7 +6,7 @@ const Attributes = {
     id: DataTypes.INTEGER,
     name: DataTypes.STRING,
     userId: DataTypes.INTEGER,
-    status: DataTypes.STRING,
+    isPrivate: DataTypes.BOOLEAN,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     deletedAt: DataTypes.DATE,
@@ -14,9 +14,9 @@ const Attributes = {
 
 const REQUIRED_ATTRIBUTES = ['id']
 
-const GetAttributes = ['id', 'name', 'status', 'userId', 'createdAt', 'updatedAt'];
-const CreateAttributes = ['name', 'status', 'userId'];
-const UpdateAttributes = ['name', 'status'];
+const GetAttributes = ['id', 'name', 'isPrivate', 'userId', 'createdAt', 'updatedAt'];
+const CreateAttributes = ['name', 'isPrivate', 'userId'];
+const UpdateAttributes = ['name', 'isPrivate'];
 module.exports = {
     Attributes,
     Name,

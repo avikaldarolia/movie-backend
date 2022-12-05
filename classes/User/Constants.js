@@ -15,7 +15,7 @@ const Attributes = {
 
 const REQUIRED_ATTRIBUTES = ['id']
 
-const GetAttributes = ['id', 'email', 'password', 'createdAt', 'updatedAt'];
+const GetAttributes = ['id', 'email', 'createdAt', 'updatedAt'];
 const CreateAttributes = ['email', 'password'];
 const UpdateAttributes = ['password'];
 module.exports = {

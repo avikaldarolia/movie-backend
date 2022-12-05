@@ -17,9 +17,10 @@ module.exports = {
         allowNull: false,
         type: DataTypes.BIGINT,
       },
-      status: {
+      isPrivate: {
         allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
