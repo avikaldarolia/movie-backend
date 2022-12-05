@@ -18,6 +18,7 @@ const Create = async (data, options) => {
         return utils.classResponse(validData.success, validData.data, validData.err)
     }
     let createResponse = utils.parseSafe(await models[Constants.Name].create(validData.data, options))
+    console.log(createResponse);
     let classAttributesKeys = Object.keys(Constants.Attributes)
     createResponse = _.assign({}, _.pick(createResponse, classAttributesKeys));
 
@@ -88,10 +89,25 @@ const Delete = async (data, options) => {
     return utils.classResponse(true, deleteResponse, '')
 };
 
+/**
+ * Get Playlist by ID
+ * @param {*} id id of the Playlist
+ * @param {*} options 
+ * @returns 
+ */
+const GetById = async (id, options = {}) => {
+    let query = {
+        id: id
+    };
+    let getResponse = await Get(query, options);
+    return getResponse.data.rows[0] || {};
+};
+
 
 module.exports = {
     Create,
     Update,
     Get,
     Delete,
+    GetById
 };

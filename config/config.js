@@ -32,5 +32,6 @@ module.exports = {
     present_otp: process.env.PRESET_OTP,
     server_env: process.env.NODE_ENV,
     jwtKey: process.env.JWT_SECRET,
+    salt: process.env.SALT_ROUNDS
   },
 };

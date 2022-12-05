@@ -2,6 +2,8 @@ const DataTypes = require('../Generic/DataTypes')
 
 const Name = 'User';
 
+const LOGIN_EXPIRE_TIME = 365 * 24 * 60 * 60 * 1000;
+
 const Attributes = {
     id: DataTypes.INTEGER,
     email: DataTypes.STRING,
@@ -22,7 +24,7 @@ module.exports = {
     GetAttributes,
     CreateAttributes,
     UpdateAttributes,
-
+    LOGIN_EXPIRE_TIME,
     REQUIRED_ATTRIBUTES
 }
 

@@ -88,10 +88,42 @@ const Delete = async (data, options) => {
     return utils.classResponse(true, deleteResponse, '')
 };
 
+/**
+ * Get user by ID
+ * @param {*} id id of the user
+ * @param {*} options 
+ * @returns 
+ */
+const GetById = async (id, options = {}) => {
+    let query = {
+        id: id
+    };
+    let getResponse = await Get(query, options);
+    return getResponse.data.rows[0] || {};
+};
+
+/**
+ * Get user by Email
+ * @param {*} email email of the user
+ * @param {*} options 
+ * @returns 
+ */
+const GetByEmail = async (email, options = {}) => {
+    let getData = await models.User.findOne({
+        where: {
+            email: email
+        }
+    });
+    getData = utils.parseSafe(getData);
+
+    return getData || {}
+}
 
 module.exports = {
     Create,
     Update,
     Get,
     Delete,
+    GetById,
+    GetByEmail
 };
