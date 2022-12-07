@@ -1,8 +1,7 @@
 const DataTypes = require('../Generic/DataTypes')
 
-const Name = 'Movies';
+const Name = 'Movie';
 
-// change accordingly
 const Attributes = {
     id: DataTypes.INTEGER,
     actors: DataTypes.TEXT,
@@ -14,11 +13,10 @@ const Attributes = {
     genre: DataTypes.TEXT,
     language: DataTypes.STRING,
     metascore: DataTypes.STRING,
-    name: DataTypes.STRING,
     plot: DataTypes.TEXT,
     poster: DataTypes.TEXT,
     rated: DataTypes.STRING,
-    ratings: DataTypes.STRING, // taking the first rating always
+    ratings: DataTypes.STRING,
     released: DataTypes.STRING,
     runtime: DataTypes.STRING,
     title: DataTypes.STRING,
@@ -36,9 +34,9 @@ const Attributes = {
 
 const REQUIRED_ATTRIBUTES = ['id']
 
-const GetAttributes = ['id', 'actors', 'awards', 'boxOffice', 'country', 'director', 'dvd', 'genre', 'language', 'metascore', 'name', 'plot', 'poster', 'rated', 'ratings', 'released', 'runtime', 'title', 'type', 'writer', 'year', 'imdbID', 'imdbRating', 'imdbVotes', 'totalSeasons', 'createdAt', 'updatedAt'];
-const CreateAttributes = ['actors', 'awards', 'boxOffice', 'country', 'director', 'dvd', 'genre', 'language', 'metascore', 'name', 'plot', 'poster', 'rated', 'ratings', 'released', 'runtime', 'title', 'type', 'writer', 'year', 'imdbID', 'imdbRating', 'imdbVotes', 'totalSeasons'];
-const UpdateAttributes = ['actors', 'awards', 'boxOffice', 'country', 'director', 'dvd', 'genre', 'language', 'metascore', 'name', 'plot', 'poster', 'rated', 'ratings', 'released', 'runtime', 'title', 'type', 'writer', 'year', 'imdbID', 'imdbRating', 'imdbVotes', 'totalSeasons'];
+const GetAttributes = ['id', 'actors', 'awards', 'boxOffice', 'country', 'director', 'dvd', 'genre', 'language', 'metascore', 'plot', 'poster', 'rated', 'ratings', 'released', 'runtime', 'title', 'type', 'writer', 'year', 'imdbID', 'imdbRating', 'imdbVotes', 'totalSeasons', 'createdAt', 'updatedAt'];
+const CreateAttributes = ['actors', 'awards', 'boxOffice', 'country', 'director', 'dvd', 'genre', 'language', 'metascore', 'plot', 'poster', 'rated', 'ratings', 'released', 'runtime', 'title', 'type', 'writer', 'year', 'imdbID', 'imdbRating', 'imdbVotes', 'totalSeasons'];
+const UpdateAttributes = ['actors', 'awards', 'boxOffice', 'country', 'director', 'dvd', 'genre', 'language', 'metascore', 'plot', 'poster', 'rated', 'ratings', 'released', 'runtime', 'title', 'type', 'writer', 'year', 'imdbID', 'imdbRating', 'imdbVotes', 'totalSeasons'];
 
 module.exports = {
     Attributes,

@@ -13,4 +13,7 @@ router.route('/:id')
 router.route('/userId')
     .get(playlist.getByUserId)
 
+router.route('/checkValidName')
+    .post(playlist.checkValidName)
+
 module.exports = router;

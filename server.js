@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const app = express();
+const utils = require('./utils/utils')
 // const Sequelize = require('./sequelize');
 const path = require('path');
 app.use(express.json());
@@ -23,6 +24,9 @@ app.use(function (req, res, next) {
 app.get('/', (req, res) => {
   res.send('Helloo World!');
 });
+
+app.use(utils.errorHandler);
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);

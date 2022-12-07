@@ -42,10 +42,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
         plot: {
             type: DataTypes.TEXT,
             allowNull: true
