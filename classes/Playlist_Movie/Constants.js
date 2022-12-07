@@ -13,9 +13,10 @@ const Attributes = {
 
 const REQUIRED_ATTRIBUTES = ['id']
 
-const GetAttributes = ['id', 'playlistId', 'isPrivate', 'movieId', 'createdAt', 'updatedAt'];
-const CreateAttributes = ['playlistId', 'isPrivate', 'movieId'];
-const UpdateAttributes = ['playlistId', 'isPrivate'];
+const GetAttributes = ['id', 'playlistId', 'movieId', 'createdAt', 'updatedAt'];
+const CreateAttributes = ['playlistId', 'movieId'];
+const UpdateAttributes = ['playlistId', 'movieId'];
+
 module.exports = {
     Attributes,
     Name,

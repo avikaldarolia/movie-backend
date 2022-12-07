@@ -28,6 +28,8 @@ module.exports = {
             deletedAt: {
                 type: DataTypes.DATE,
             },
+        }, {
+            freezeTableName: true
         });
     },
     async down(queryInterface, Sequelize) {

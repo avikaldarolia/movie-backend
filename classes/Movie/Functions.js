@@ -31,7 +31,6 @@ const FindorCreate = async (movie) => {
         totalSeasons: movie.totalSeasons
     }
     movieData = _.omitBy(movieData, _.isNil);
-    console.log("movieData:", movieData);
     try {
         let fetchedMovie = utils.parseSafe(await models[Constants.Name].findOrCreate({
             where: {
@@ -39,11 +38,9 @@ const FindorCreate = async (movie) => {
             },
             defaults: movieData
         }))
-        console.log(fetchedMovie);
+
         return utils.classResponse(true, fetchedMovie, '')
     } catch (err) {
-        console.log('=====');
-        console.log("err:", err);
         return utils.classResponse(false, {}, '')
     }
 }

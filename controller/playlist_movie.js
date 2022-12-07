@@ -1,20 +1,16 @@
 const utils = require('../utils/utils');
 const _ = require('lodash');
 
-const Playlist = require('../classes/Playlist/Playlist')
-const PlaylistFunctions = require('../classes/Playlist/Functions')
-const Constants = require('../classes/Playlist/Constants')
+const Playlist_Movie = require('../classes/Playlist_Movie/Playlist_Movie')
+const PlaylistMovieFunctions = require('../classes/Playlist_Movie/Functions')
+const Constants = require('../classes/Playlist_Movie/Constants')
 
 exports.create = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let data = _.pick(req.body, Constants.CreateAttributes);
-        let nameValidity = await PlaylistFunctions.checkValidName(data.userId, data.name)
-        if (!nameValidity.data) {
-            // console.log(nameValidity);
-            return utils.sendResponse(req, res, false, nameValidity.data, nameValidity.err)
-        }
-        let response = await Playlist.Create(data, options)
+        let response = await Playlist_Movie.Create(data, options);
+
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {
         next(err)
@@ -25,7 +21,7 @@ exports.get = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let query = _.pick(req.query, [...Constants.GetAttributes], ...['page', 'size'])
-        let response = await Playlist.Get(query, options)
+        let response = await Playlist_Movie.Get(query, options)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {
@@ -40,7 +36,7 @@ exports.updateById = utils.asyncMiddleware(async (req, res, next) => {
     let data = _.assign({ id }, { ...body });
 
     try {
-        let response = await Playlist.Update(data, options)
+        let response = await Playlist_Movie.Update(data, options)
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {
         next()
@@ -51,7 +47,7 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let data = req.body
-        let response = await Playlist.Delete(data, options)
+        let response = await Playlist_Movie.Delete(data, options)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {
@@ -59,21 +55,10 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
     }
 })
 
-exports.getByUserId = utils.asyncMiddleware(async (req, res, next) => {
+exports.fetchOrCreate = utils.asyncMiddleware(async (req, res, next) => {
     try {
-        let userId = parseInt(req.query.userId);
-        let response = await PlaylistFunctions.getByUserId(userId)
-
-        return utils.sendResponse(req, res, response.success, response.data, response.err)
-    } catch (err) {
-        next(err)
-    }
-})
-
-exports.checkValidName = utils.asyncMiddleware(async (req, res, next) => {
-    try {
-        let { userId, name } = req.body
-        let response = await PlaylistFunctions.checkValidName(userId, name)
+        let mapping = req.body;
+        let response = await PlaylistMovieFunctions.FindorCreate(mapping)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {

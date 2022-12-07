@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
         deletedAt: {
             type: DataTypes.DATE,
         },
+    }, {
+        freezeTableName: true
     });
     Playlist_Movie.associate = (models) => {
         Playlist_Movie.belongsTo(models.Playlist, { foreignKey: 'playlistId', as: 'Playlist' });
