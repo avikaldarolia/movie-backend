@@ -3,7 +3,12 @@ const router = express.Router();
 const playlist = require('../../controller/playlist');
 
 router.route('/')
-    .post(playlist.create);
+    .get(playlist.get)
+    .post(playlist.create)
+    .delete(playlist.deleteById)
+
+router.route('/:id')
+    .put(playlist.updateById)
 
 router.route('/userId')
     .get(playlist.getByUserId)

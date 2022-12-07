@@ -3,6 +3,11 @@ const model = require('../../models/index')
 
 const Constants = require('./Constants')
 
+/**
+ * Get all Playlists by userId
+ * @param {*} userId 
+ * @returns 
+ */
 const getByUserId = async (userId) => {
     try {
         let playlists = utils.parseSafe(await model[Constants.Name].findAll({
@@ -12,6 +17,7 @@ const getByUserId = async (userId) => {
         }))
         return utils.classResponse(true, playlists, '')
     } catch (err) {
+        console.log(err);
         return utils.classResponse(false, {}, err)
     }
 }

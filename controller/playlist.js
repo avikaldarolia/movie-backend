@@ -56,8 +56,8 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
 
 exports.getByUserId = utils.asyncMiddleware(async (req, res, next) => {
     try {
-        console.log(req.params);
-        let userId = parseInt(req.params.userId);
+        let userId = parseInt(req.query.userId);
+        console.log(userId);
         let response = await PlaylistFunctions.getByUserId(userId)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
