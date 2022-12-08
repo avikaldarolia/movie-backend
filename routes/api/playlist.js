@@ -7,11 +7,13 @@ router.route('/')
     .post(playlist.create)
     .delete(playlist.deleteById)
 
+router.route('/userId/:userId')
+    .get(playlist.getByUserId)
+
 router.route('/:id')
+    .get(playlist.getPlaylistDetails)
     .put(playlist.updateById)
 
-router.route('/userId')
-    .get(playlist.getByUserId)
 
 router.route('/checkValidName')
     .post(playlist.checkValidName)

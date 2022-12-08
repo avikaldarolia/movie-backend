@@ -11,7 +11,6 @@ exports.create = utils.asyncMiddleware(async (req, res, next) => {
         let data = _.pick(req.body, Constants.CreateAttributes);
         let nameValidity = await PlaylistFunctions.checkValidName(data.userId, data.name)
         if (!nameValidity.data) {
-            // console.log(nameValidity);
             return utils.sendResponse(req, res, false, nameValidity.data, nameValidity.err)
         }
         let response = await Playlist.Create(data, options)
@@ -61,7 +60,7 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
 
 exports.getByUserId = utils.asyncMiddleware(async (req, res, next) => {
     try {
-        let userId = parseInt(req.query.userId);
+        let userId = parseInt(req.params.userId);
         let response = await PlaylistFunctions.getByUserId(userId)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
@@ -74,6 +73,17 @@ exports.checkValidName = utils.asyncMiddleware(async (req, res, next) => {
     try {
         let { userId, name } = req.body
         let response = await PlaylistFunctions.checkValidName(userId, name)
+
+        return utils.sendResponse(req, res, response.success, response.data, response.err)
+    } catch (err) {
+        next(err)
+    }
+})
+
+exports.getPlaylistDetails = utils.asyncMiddleware(async (req, res, next) => {
+    try {
+        let id = parseInt(req.params.id)
+        let response = await PlaylistFunctions.playlistDetails(id)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {

@@ -19,6 +19,7 @@ const getByUserId = async (userId) => {
         }))
         return utils.classResponse(true, playlists, '')
     } catch (err) {
+        console.log(err);
         return utils.classResponse(false, {}, err)
     }
 }
@@ -45,7 +46,24 @@ const checkValidName = async (userId, name) => {
     }
 }
 
+const playlistDetails = async (id) => {
+    try {
+        let playlist = utils.parseSafe(await model[Constants.Name].findOne({
+            where: {
+                id: parseInt(id)
+            },
+            include: [
+                model.Movie,
+            ]
+        }))
+        return utils.classResponse(true, playlist, '')
+    } catch (err) {
+        return utils.classResponse(false, {}, err)
+    }
+}
+
 module.exports = {
     getByUserId,
-    checkValidName
+    checkValidName,
+    playlistDetails
 }
