@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true
     });
     Playlist_Movie.associate = (models) => {
-        Playlist_Movie.belongsTo(models.Playlist, { foreignKey: 'playlistId', as: 'Playlist' });
+        Playlist_Movie.belongsTo(models.Playlist, { foreignKey: 'playlistId', as: 'Playlist', onDelete: 'cascade', hooks: true, allowNull: false });
         Playlist_Movie.belongsTo(models.Movie, { foreignKey: 'movieId', as: 'Movie' });
     };
     return Playlist_Movie;

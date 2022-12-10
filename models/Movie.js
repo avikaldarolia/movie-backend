@@ -112,7 +112,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Movie.associate = (models) => {
-        Movie.belongsToMany(models.Playlist, { through: models.Playlist_Movie, foreignKey: 'movieId' });
+        Movie.belongsToMany(models.Playlist, { through: models.Playlist_Movie, foreignKey: 'movieId', onDelete: 'CASCADE' });
         Movie.hasMany(models.Playlist_Movie, { foreignKey: 'movieId' });
     };
     return Movie;

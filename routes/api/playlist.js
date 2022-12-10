@@ -1,21 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const playlist = require('../../controller/playlist');
+const auth = require('../../controller/auth');
 
 router.route('/')
-    .get(playlist.get)
-    .post(playlist.create)
-    .delete(playlist.deleteById)
+    .get(auth.isJWT, playlist.get)
+    .post(auth.isJWT, playlist.create)
+    .delete(auth.isJWT, playlist.deleteById)
 
 router.route('/userId/:userId')
-    .get(playlist.getByUserId)
+    .get(auth.isJWT, playlist.getByUserId)
 
 router.route('/:id')
-    .get(playlist.getPlaylistDetails)
-    .put(playlist.updateById)
+    .get(auth.isJWT, playlist.getPlaylistDetails)
+    .put(auth.isJWT, playlist.updateById)
 
 
 router.route('/checkValidName')
-    .post(playlist.checkValidName)
+    .post(auth.isJWT, playlist.checkValidName)
 
 module.exports = router;

@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 const Playlist = require('../classes/Playlist/Playlist')
 const PlaylistFunctions = require('../classes/Playlist/Functions')
+const Playlist_MovieFunctions = require('../classes/Playlist_Movie/Functions')
 const Constants = require('../classes/Playlist/Constants')
 
 exports.create = utils.asyncMiddleware(async (req, res, next) => {
@@ -50,8 +51,8 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let data = req.body
+        await Playlist_MovieFunctions.deleteByPlaylistId(data.id)
         let response = await Playlist.Delete(data, options)
-
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {
         next(err)
@@ -71,7 +72,8 @@ exports.getByUserId = utils.asyncMiddleware(async (req, res, next) => {
 
 exports.checkValidName = utils.asyncMiddleware(async (req, res, next) => {
     try {
-        let { userId, name } = req.body
+        let { name } = req.body
+        let userId = parseInt(req.user.id)
         let response = await PlaylistFunctions.checkValidName(userId, name)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)

@@ -3,6 +3,11 @@ const models = require('../../models/index')
 
 const Constants = require('./Constants')
 
+/**
+ * Finds or Creates playlist_movie mapping
+ * @param {*} mapping 
+ * @returns 
+ */
 const FindorCreate = async (mapping) => {
     let mappingData = {
         playlistId: parseInt(mapping.playlistId),
@@ -23,6 +28,26 @@ const FindorCreate = async (mapping) => {
     }
 }
 
+/**
+ * Delete playlist_movie mappings by playlistId
+ * @param {*} playlistId 
+ * @returns 
+ */
+const deleteByPlaylistId = async (playlistId) => {
+    try {
+        let mappings = utils.parseSafe(await models[Constants.Name].destroy({
+            where: {
+                playlistId: parseInt(playlistId)
+            }
+        }))
+
+        return utils.classResponse(true, mappings, '')
+    } catch (err) {
+        return utils.classResponse(false, {}, '')
+    }
+}
+
 module.exports = {
-    FindorCreate
+    FindorCreate,
+    deleteByPlaylistId
 }

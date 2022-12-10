@@ -1,10 +1,37 @@
 const utils = require('../utils/utils')
 const bcrypt = require('bcrypt')
-const errorConstants = require('../errorConstants')
+const jwt = require('jwt-simple')
+const _ = require('lodash')
+const configParameters = require('../config/config').parameters;
 
+const errorConstants = require('../errorConstants')
 const User = require('../classes/User/User')
 const UserFunctions = require('../classes/User/Functions')
 
+exports.isJWT = async (req, res, next) => {
+    if (utils.isLocalEnvironment()) {
+        req.user = await User.GetById(1)
+        return next();
+    }
+
+    if (utils.empty(req.headers.authorization)) {
+        return res.status(401).send({ message: "Invalid Authorization" });
+    }
+
+    let token = _.trimStart(req.headers.authorization, 'JWT ');
+    let jwtKey = configParameters.jwtKey;
+
+    let payload = jwt.decode(token, jwtKey);
+
+    let user = await User.GetById(payload.id, {});
+    if (utils.empty(user)) {
+        return res.status(401).send({ message: "Invalid Authorization" });
+    }
+
+    req.user = user;
+
+    return next();
+}
 
 exports.isNewUserValid = utils.asyncMiddleware(async (req, res, next) => {
     try {
