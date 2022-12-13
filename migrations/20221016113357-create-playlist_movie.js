@@ -29,7 +29,9 @@ module.exports = {
                 type: DataTypes.DATE,
             },
         }, {
-            freezeTableName: true
+            freezeTableName: true,
+            paranoid: true,
+            timestamps: true
         });
     },
     async down(queryInterface, Sequelize) {

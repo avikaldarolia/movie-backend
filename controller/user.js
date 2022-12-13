@@ -12,7 +12,7 @@ exports.create = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let data = _.pick(req.body, Constants.CreateAttributes);
-        if (!data.email || !data.password) {
+        if (!data.username || !data.email || !data.password) {
             return utils.sendResponse(req, res, false, {}, errorConstants.invalid_data)
         }
         if (data.password.length < 6) {

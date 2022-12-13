@@ -30,6 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     deletedAt: {
       type: DataTypes.DATE,
     },
+  }, {
+    paranoid: true,
+    timestamps: true
   });
 
   Playlist.associate = (models) => {

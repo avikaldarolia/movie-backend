@@ -6,6 +6,7 @@ const LOGIN_EXPIRE_TIME = 365 * 24 * 60 * 60 * 1000;
 
 const Attributes = {
     id: DataTypes.INTEGER,
+    username: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     createdAt: DataTypes.DATE,
@@ -15,9 +16,9 @@ const Attributes = {
 
 const REQUIRED_ATTRIBUTES = ['id']
 
-const GetAttributes = ['id', 'email', 'createdAt', 'updatedAt'];
-const CreateAttributes = ['email', 'password'];
-const UpdateAttributes = ['password'];
+const GetAttributes = ['id', 'username', 'email', 'createdAt', 'updatedAt'];
+const CreateAttributes = ['username', 'email', 'password'];
+const UpdateAttributes = ['username', 'password'];
 module.exports = {
     Attributes,
     Name,
