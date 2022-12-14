@@ -4,6 +4,7 @@ const models = require('../../models/index');
 
 const GenericFunctions = require('../Generic/Functions');
 const Constants = require('./Constants');
+const { Op } = require('sequelize');
 
 /**
  * Create the entry into the table
@@ -103,17 +104,21 @@ const GetById = async (id, options = {}) => {
 };
 
 /**
- * Get user by Email
+ * Get user by Email or Username
  * @param {*} email email of the user
+ * @param {*} username username of the user
  * @param {*} options 
  * @returns 
  */
-const GetByEmail = async (email, options = {}) => {
-    let getData = await models.User.findOne({
+const GetByEmailorUsername = async (email, username = '', options = {}) => {
+    let getData = utils.parseSafe(await models.User.findOne({
         where: {
-            email: email
+            [Op.or]: [
+                { username: username },
+                { email: email }
+            ]
         }
-    });
+    }));
     getData = utils.parseSafe(getData);
 
     return getData || {}
@@ -125,5 +130,5 @@ module.exports = {
     Get,
     Delete,
     GetById,
-    GetByEmail
+    GetByEmailorUsername
 };

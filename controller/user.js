@@ -69,3 +69,16 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
         next(err)
     }
 })
+
+exports.search = utils.asyncMiddleware(async (req, res, next) => {
+    try {
+        console.log('here');
+        console.log(req.body);
+        let username = req.body.username
+        let response = await UserFunctions.searchUser(username)
+
+        return utils.sendResponse(req, res, response.success, response.data, response.err)
+    } catch (err) {
+        next(err)
+    }
+})

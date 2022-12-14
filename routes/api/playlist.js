@@ -17,6 +17,6 @@ router.route('/:id')
 
 
 router.route('/checkValidName')
-    .post(auth.isJWT, playlist.checkValidName)
+    .post(auth.isJWT, playlist.checkPlaylistNameExists)
 
 module.exports = router;

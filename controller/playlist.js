@@ -10,7 +10,7 @@ exports.create = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let data = _.pick(req.body, Constants.CreateAttributes);
-        let nameValidity = await PlaylistFunctions.checkValidName(data.userId, data.name)
+        let nameValidity = await PlaylistFunctions.playlistNameExists(data.userId, data.name)
         if (!nameValidity.data) {
             return utils.sendResponse(req, res, false, nameValidity.data, nameValidity.err)
         }
@@ -70,11 +70,11 @@ exports.getByUserId = utils.asyncMiddleware(async (req, res, next) => {
     }
 })
 
-exports.checkValidName = utils.asyncMiddleware(async (req, res, next) => {
+exports.checkPlaylistNameExists = utils.asyncMiddleware(async (req, res, next) => {
     try {
         let { name } = req.body
         let userId = parseInt(req.user.id)
-        let response = await PlaylistFunctions.checkValidName(userId, name)
+        let response = await PlaylistFunctions.playlistNameExists(userId, name)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {

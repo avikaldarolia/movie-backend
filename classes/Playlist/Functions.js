@@ -31,7 +31,7 @@ const getByUserId = async (userId) => {
  * @param {*} name 
  * @returns 
  */
-const checkValidName = async (userId, name) => {
+const playlistNameExists = async (userId, name) => {
     try {
         let playlist = utils.parseSafe(await models[Constants.Name].findOne({
             where: {
@@ -47,6 +47,11 @@ const checkValidName = async (userId, name) => {
     }
 }
 
+/**
+ * Gets all details of playlist including the movies in it
+ * @param {*} id of playlist
+ * @returns 
+ */
 const playlistDetails = async (id) => {
     try {
         let playlist = utils.parseSafe(await models[Constants.Name].findOne({
@@ -66,6 +71,6 @@ const playlistDetails = async (id) => {
 
 module.exports = {
     getByUserId,
-    checkValidName,
+    playlistNameExists,
     playlistDetails
 }

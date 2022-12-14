@@ -5,6 +5,8 @@ const auth = require('../../controller/auth');
 
 router.route('/')
     .get(auth.isJWT, user.get)
-    .post(user.create)
+
+router.route('/search')
+    .post(auth.isJWT, user.search)
 
 module.exports = router;
