@@ -39,6 +39,8 @@ module.exports = (sequelize, DataTypes) => {
   );
   User.associate = (models) => {
     User.hasMany(models.Playlist, { foreignKey: 'userId' });
+    User.hasMany(models.FriendRequest, { foreignKey: 'senderId', as: 'Sender' })
+    User.hasMany(models.FriendRequest, { foreignKey: 'receiverId', as: 'Receiver' })
   };
   return User;
 };

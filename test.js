@@ -1,5 +1,5 @@
 const models = require('./models/index')
-const c = require('./classes/Playlist_Movie/Constants')
+const c = require('./classes/FriendRequest/Constants')
 console.log(models[c.Name]);
 
 for (let key in models[c.Name].rawAttributes) {
