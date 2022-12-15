@@ -10,9 +10,7 @@ const UserFunctions = require('../classes/User/Functions')
 
 exports.isJWT = async (req, res, next) => {
     if (utils.isLocalEnvironment()) {
-        console.log('123');
         req.user = await User.GetById(1)
-        console.log('345');
         return next();
     }
 
