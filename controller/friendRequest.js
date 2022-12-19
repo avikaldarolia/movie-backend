@@ -14,7 +14,7 @@ exports.sendFriendRequest = utils.asyncMiddleware(async (req, res, next) => {
         }
 
         let mappingCheck = await FriendRequestFunctions.checkMapping(data.senderId, data.receiverId)
-        if (!utils.empty(mappingCheck)) {
+        if (utils.empty(mappingCheck)) {
             return utils.sendResponse(req, res, false, {}, errorConstants.friend_request_exits)
         }
 
@@ -71,8 +71,19 @@ exports.reviewFriendRequest = utils.asyncMiddleware(async (req, res, next) => {
 exports.getFriends = utils.asyncMiddleware(async (req, res, next) => {
     try {
         let userId = parseInt(req.params.id)
-        console.log(userId);
         let response = await FriendRequestFunctions.getFriendLists(userId)
+
+        return utils.sendResponse(req, res, response.success, response.data, response.err)
+    } catch (err) {
+        next(err)
+    }
+})
+
+exports.checkFriendRequestMapping = utils.asyncMiddleware(async (req, res, next) => {
+    try {
+        let senderId = parseInt(req.user.id)
+        let receiverId = parseInt(req.params.userId)
+        let response = await FriendRequestFunctions.checkMapping(senderId, receiverId)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {

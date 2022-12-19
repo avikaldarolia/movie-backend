@@ -6,6 +6,7 @@ const configParameters = require('../config/config').parameters;
 
 const errorConstants = require('../errorConstants')
 const User = require('../classes/User/User')
+const Constants = require('../classes/User/Constants')
 const UserFunctions = require('../classes/User/Functions')
 
 exports.isJWT = async (req, res, next) => {
@@ -13,7 +14,6 @@ exports.isJWT = async (req, res, next) => {
         req.user = await User.GetById(1)
         return next();
     }
-
     if (utils.empty(req.headers.authorization)) {
         return res.status(401).send({ message: "Invalid Authorization" });
     }
@@ -29,7 +29,7 @@ exports.isJWT = async (req, res, next) => {
     }
 
     req.user = user;
-
+    console.log(req.user);
     return next();
 }
 
@@ -50,6 +50,8 @@ exports.isNewUserValid = utils.asyncMiddleware(async (req, res, next) => {
 
         return next();
     } catch (err) {
+        console.log('!');
+        console.log(err);
         return utils.sendResponse(req, res, false, {}, err)
     }
 })

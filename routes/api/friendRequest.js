@@ -9,6 +9,9 @@ router.route('/:id')
 router.route('/addFriend')
     .post(auth.isJWT, friendRequest.sendFriendRequest)
 
+router.route('/mapping/:userId')
+    .get(auth.isJWT, friendRequest.checkFriendRequestMapping)
+
 router.route('/removeFriend')
     .post(auth.isJWT, friendRequest.removeFriend)
 

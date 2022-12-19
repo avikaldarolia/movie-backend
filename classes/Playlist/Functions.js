@@ -12,6 +12,7 @@ const { Op } = require('sequelize')
  */
 const getByUserId = async (userId) => {
     try {
+        console.log('here');
         let playlists = utils.parseSafe(await models[Constants.Name].findAll({
             where: {
                 userId: parseInt(userId),

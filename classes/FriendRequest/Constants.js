@@ -21,7 +21,7 @@ const ALLOWED_STATUS = [ACCEPTED, DECLINED, PENDING]
 const REQUIRED_ATTRIBUTES = ['id']
 
 const GetAttributes = ['id', 'status', 'senderId', 'receiverId', 'createdAt', 'updatedAt'];
-const CreateAttributes = ['status', 'senderId', 'receiverId'];
+const CreateAttributes = ['senderId', 'receiverId', 'status'];
 const UpdateAttributes = ['status'];
 
 module.exports = {

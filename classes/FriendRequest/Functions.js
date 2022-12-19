@@ -11,12 +11,14 @@ const checkMapping = async (senderId, receiverId) => {
         let mapping = utils.parseSafe(await models[Constants.Name].findOne({
             where: {
                 [Op.or]: [
-                    { senderId: senderId },
-                    { receiverId: receiverId }
-                ],
-                [Op.or]: [
-                    { senderId: receiverId },
-                    { receiverId: senderId }
+                    {
+                        senderId: senderId,
+                        receiverId: receiverId
+                    },
+                    {
+                        senderId: receiverId,
+                        receiverId: senderId
+                    }
                 ]
             }
         }))
@@ -62,7 +64,11 @@ const getFriendLists = async (userId) => {
                     { receiverId: parseInt(userId) },
                     { senderId: parseInt(userId) }
                 ]
-            }
+            },
+            include: [
+                { model: models.User, as: 'Sender' },
+                { model: models.User, as: 'Receiver' }
+            ]
         }))
 
         return utils.classResponse(true, friends, '')
