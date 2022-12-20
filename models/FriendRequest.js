@@ -9,12 +9,10 @@ module.exports = (sequelize, DataTypes) => {
         senderId: {
             allowNull: false,
             type: DataTypes.BIGINT,
-            unique: true
         },
         receiverId: {
             allowNull: false,
             type: DataTypes.BIGINT,
-            unique: true
         },
         status: {
             type: DataTypes.ENUM,

@@ -39,9 +39,9 @@ exports.removeFriend = utils.asyncMiddleware(async (req, res, next) => {
 exports.getStatusList = utils.asyncMiddleware(async (req, res, next) => {
     try {
         let userId = parseInt(req.user.id)
-        console.log(userId);
+        // console.log(userId);
         let status = req.params.status
-        console.log(status);
+        // console.log(status);
         if (!Constants.ALLOWED_STATUS.includes(status)) {
             return utils.sendResponse(req, res, false, {}, errorConstants.invalid_friendRequest_status)
         }
