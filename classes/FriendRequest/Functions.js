@@ -4,6 +4,76 @@ const { Op } = require('sequelize')
 
 const Constants = require('./Constants')
 
+/**
+ * Return the list of request lists by type
+ * @param {*} userId 
+ * @param {*} type 
+ */
+const getRequestList = async (userId, type) => {
+    let requestList = {};
+
+    switch (type) {
+        case 'Incoming':
+            try {
+                requestList = utils.parseSafe(await models[Constants.Name].findAll({
+                    where: {
+                        receiverId: userId,
+                        status: Constants.PENDING
+                    }
+                }))
+            } catch (err) {
+                return utils.classResponse(false, {}, err)
+            }
+            break;
+        case Constants.DECLINED:
+            try {
+                requestList.MyDeclined = utils.parseSafe(await models[Constants.Name].findAll({
+                    where: {
+                        receiverId: userId,
+                        status: Constants.DECLINED
+                    }
+                }))
+                requestList.OthersDeclined = utils.parseSafe(await models[Constants.Name].findAll({
+                    where: {
+                        senderId: userId,
+                        status: Constants.DECLINED
+                    }
+                }))
+            } catch (err) {
+                return utils.classResponse(false, {}, err)
+            }
+            break;
+        case 'Sent':
+            try {
+                console.log(userId, type);
+                requestList = utils.parseSafe(await models[Constants.Name].findAll({
+                    where: {
+                        senderId: userId,
+                        status: Constants.PENDING
+                        // [Op.or]: [
+                        //     { status: Constants.DECLINED },
+                        //     { status: Constants.PENDING },
+                        // ]
+                    }
+                }))
+            } catch (err) {
+                return utils.classResponse(false, {}, err)
+            }
+            break;
+        default:
+            break;
+    }
+
+    return utils.classResponse(true, requestList, '')
+}
+
+
+/**
+ * Checks if there's any kind of friend request exisiting between 2 ID's
+ * @param {*} senderId 
+ * @param {*} receiverId 
+ * @returns 
+ */
 const checkMapping = async (senderId, receiverId) => {
     try {
         senderId = parseInt(senderId)
@@ -82,5 +152,6 @@ const getFriendLists = async (userId) => {
 module.exports = {
     checkMapping,
     statusRequests,
-    getFriendLists
+    getFriendLists,
+    getRequestList
 }

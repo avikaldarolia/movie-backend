@@ -9,16 +9,19 @@ router.route('/:id')
 router.route('/addFriend')
     .post(auth.isJWT, friendRequest.sendFriendRequest)
 
-router.route('/mapping/:userId')
-    .get(auth.isJWT, friendRequest.checkFriendRequestMapping)
-
 router.route('/removeFriend')
     .post(auth.isJWT, friendRequest.removeFriend)
 
-router.route('/status/:status')
-    .get(auth.isJWT, friendRequest.getStatusList)
+router.route('/requests/:type')
+    .get(auth.isJWT, friendRequest.requestList)
+
+router.route('/mapping/:userId')
+    .get(auth.isJWT, friendRequest.checkFriendRequestMapping)
 
 router.route('/review/:id')
     .patch(auth.isJWT, friendRequest.reviewFriendRequest)
+
+router.route('/status/:status')
+    .get(auth.isJWT, friendRequest.getStatusList)
 
 module.exports = router

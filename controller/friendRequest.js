@@ -36,6 +36,18 @@ exports.removeFriend = utils.asyncMiddleware(async (req, res, next) => {
     }
 })
 
+exports.requestList = utils.asyncMiddleware(async (req, res, next) => {
+    try {
+        let userId = parseInt(req.user.id)
+        let type = req.params.type
+        let response = await FriendRequestFunctions.getRequestList(userId, type)
+        return utils.sendResponse(req, res, response.success, response.data, response.err)
+    } catch (err) {
+        next(err)
+    }
+})
+
+
 exports.getStatusList = utils.asyncMiddleware(async (req, res, next) => {
     try {
         let userId = parseInt(req.user.id)
