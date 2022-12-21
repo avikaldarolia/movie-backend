@@ -19,7 +19,11 @@ const getRequestList = async (userId, type) => {
                     where: {
                         receiverId: userId,
                         status: Constants.PENDING
-                    }
+                    },
+                    include: [
+                        { model: models.User, as: 'Sender' },
+                        { model: models.User, as: 'Receiver' }
+                    ]
                 }))
             } catch (err) {
                 return utils.classResponse(false, {}, err)
@@ -31,13 +35,21 @@ const getRequestList = async (userId, type) => {
                     where: {
                         receiverId: userId,
                         status: Constants.DECLINED
-                    }
+                    },
+                    include: [
+                        { model: models.User, as: 'Sender' },
+                        { model: models.User, as: 'Receiver' }
+                    ]
                 }))
                 requestList.OthersDeclined = utils.parseSafe(await models[Constants.Name].findAll({
                     where: {
                         senderId: userId,
                         status: Constants.DECLINED
-                    }
+                    },
+                    include: [
+                        { model: models.User, as: 'Sender' },
+                        { model: models.User, as: 'Receiver' }
+                    ]
                 }))
             } catch (err) {
                 return utils.classResponse(false, {}, err)
@@ -50,11 +62,11 @@ const getRequestList = async (userId, type) => {
                     where: {
                         senderId: userId,
                         status: Constants.PENDING
-                        // [Op.or]: [
-                        //     { status: Constants.DECLINED },
-                        //     { status: Constants.PENDING },
-                        // ]
-                    }
+                    },
+                    include: [
+                        { model: models.User, as: 'Sender' },
+                        { model: models.User, as: 'Receiver' }
+                    ]
                 }))
             } catch (err) {
                 return utils.classResponse(false, {}, err)
