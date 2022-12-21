@@ -4,7 +4,6 @@ const models = require('../../models/index');
 
 const GenericFunctions = require('../Generic/Functions');
 const Constants = require('./Constants');
-const { Op } = require('sequelize');
 
 /**
  * Create the entry into the table
@@ -19,6 +18,7 @@ const Create = async (data, options) => {
         return utils.classResponse(validData.success, validData.data, validData.err)
     }
     let createResponse = utils.parseSafe(await models[Constants.Name].create(validData.data, options))
+    console.log(createResponse);
     let classAttributesKeys = Object.keys(Constants.Attributes)
     createResponse = _.assign({}, _.pick(createResponse, classAttributesKeys));
 
@@ -43,16 +43,6 @@ const Get = async (data, options) => {
 
     return utils.classResponse(true, { count: count, rows: dbData }, '');
 };
-
-/**
- * Update the entry into the table
- * 
- * @param {map of table fields} data || also include dataId
- * @param {*} options 
- * @returns return the update query response
- */
-
-
 
 /**
  * Update the entry into table
@@ -90,8 +80,8 @@ const Delete = async (data, options) => {
 };
 
 /**
- * Get user by ID
- * @param {*} id id of the user
+ * Get FriendRequest by ID
+ * @param {*} id id of the FriendRequest
  * @param {*} options 
  * @returns 
  */
@@ -103,32 +93,11 @@ const GetById = async (id, options = {}) => {
     return getResponse.data.rows[0] || {};
 };
 
-/**
- * Get user by Email or Username
- * @param {*} email email of the user
- * @param {*} username username of the user
- * @param {*} options 
- * @returns 
- */
-const GetByEmailorUsername = async (email, username = '', options = {}) => {
-    let getData = utils.parseSafe(await models.User.findOne({
-        where: {
-            [Op.or]: [
-                { username: username },
-                { email: email }
-            ]
-        }
-    }));
-    getData = utils.parseSafe(getData);
-
-    return getData || {}
-}
 
 module.exports = {
     Create,
     Update,
     Get,
     Delete,
-    GetById,
-    GetByEmailorUsername
+    GetById
 };

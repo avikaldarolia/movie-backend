@@ -12,7 +12,7 @@ exports.create = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let data = _.pick(req.body, Constants.CreateAttributes);
-        if (!data.email || !data.password) {
+        if (!data.username || !data.email || !data.password) {
             return utils.sendResponse(req, res, false, {}, errorConstants.invalid_data)
         }
         if (data.password.length < 6) {
@@ -63,6 +63,19 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
     try {
         let data = req.body
         let response = await User.Delete(data, options)
+
+        return utils.sendResponse(req, res, response.success, response.data, response.err)
+    } catch (err) {
+        next(err)
+    }
+})
+
+exports.search = utils.asyncMiddleware(async (req, res, next) => {
+    try {
+        console.log('here');
+        console.log(req.body);
+        let username = req.body.username
+        let response = await UserFunctions.searchUser(username)
 
         return utils.sendResponse(req, res, response.success, response.data, response.err)
     } catch (err) {

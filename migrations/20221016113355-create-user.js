@@ -9,6 +9,11 @@ module.exports = {
         type: DataTypes.BIGINT,
         autoIncrement: true,
       },
+      username: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true
+      },
       email: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -29,6 +34,9 @@ module.exports = {
       deletedAt: {
         type: DataTypes.DATE,
       },
+    }, {
+      paranoid: true,
+      timestamps: true
     });
   },
   async down(queryInterface, Sequelize) {

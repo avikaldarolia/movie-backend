@@ -6,6 +6,7 @@ const configParameters = require('../config/config').parameters;
 
 const errorConstants = require('../errorConstants')
 const User = require('../classes/User/User')
+const Constants = require('../classes/User/Constants')
 const UserFunctions = require('../classes/User/Functions')
 
 exports.isJWT = async (req, res, next) => {
@@ -13,7 +14,6 @@ exports.isJWT = async (req, res, next) => {
         req.user = await User.GetById(1)
         return next();
     }
-
     if (utils.empty(req.headers.authorization)) {
         return res.status(401).send({ message: "Invalid Authorization" });
     }
@@ -29,19 +29,29 @@ exports.isJWT = async (req, res, next) => {
     }
 
     req.user = user;
-
+    console.log(req.user);
     return next();
 }
 
 exports.isNewUserValid = utils.asyncMiddleware(async (req, res, next) => {
     try {
-        let user = await User.GetByEmail(req.body.email)
+        let data = _.pick(req.body, Constants.CreateAttributes);
+        if (!data.username || !data.email || !data.password) {
+            return utils.sendResponse(req, res, false, {}, errorConstants.invalid_data)
+        }
+        if (data.password.length < 6) {
+            return utils.sendResponse(req, res, false, {}, errorConstants.invalid_password_length)
+        }
+
+        let user = await User.GetByEmailorUsername(data.email, data.username)
         if (user && !utils.empty(user)) {
-            return utils.sendResponse(req, res, false, {}, errorConstants.email_already_in_use)
+            return utils.sendResponse(req, res, false, {}, errorConstants.cred_already_in_use)
         }
 
         return next();
     } catch (err) {
+        console.log('!');
+        console.log(err);
         return utils.sendResponse(req, res, false, {}, err)
     }
 })
@@ -57,7 +67,7 @@ exports.login = utils.asyncMiddleware(async (req, res, next) => {
             return utils.sendResponse(req, res, false, {}, errorConstants.invalid_password_length)
         }
 
-        let user = await User.GetByEmail(req.body.email)
+        let user = await User.GetByEmailorUsername(req.body.email, req.body.username)
         console.log(user);
 
         if (!user || utils.empty(user)) {

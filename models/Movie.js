@@ -109,6 +109,9 @@ module.exports = (sequelize, DataTypes) => {
         deletedAt: {
             type: DataTypes.DATE,
         },
+    }, {
+        paranoid: true,
+        timestamps: true
     });
 
     Movie.associate = (models) => {

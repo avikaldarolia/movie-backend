@@ -2,20 +2,26 @@
 const { DataTypes } = require('sequelize')
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Playlist_Movie', {
+        await queryInterface.createTable('FriendRequest', {
             id: {
-                type: DataTypes.BIGINT,
+                allowNull: false,
                 primaryKey: true,
+                type: DataTypes.BIGINT,
                 autoIncrement: true,
-                allowNull: false
             },
-            playlistId: {
+            senderId: {
+                allowNull: false,
                 type: DataTypes.BIGINT,
-                allowNull: false
             },
-            movieId: {
+            receiverId: {
+                allowNull: false,
                 type: DataTypes.BIGINT,
-                allowNull: false
+            },
+            status: {
+                type: DataTypes.ENUM,
+                values: ["Pending", "Declined", "Accepted"],
+                defaultValue: "Pending",
+                allowNull: false,
             },
             createdAt: {
                 allowNull: false,
@@ -29,12 +35,12 @@ module.exports = {
                 type: DataTypes.DATE,
             },
         }, {
-            freezeTableName: true,
             paranoid: true,
-            timestamps: true
+            timestamps: true,
+            freezeTableName: true,
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Playlist_Movie');
+        await queryInterface.dropTable('FriendRequest');
     }
 };

@@ -1,5 +1,5 @@
 const utils = require('../../utils/utils')
-const model = require('../../models/index')
+const models = require('../../models/index')
 const errorConstants = require('../../errorConstants')
 
 const Constants = require('./Constants')
@@ -12,10 +12,12 @@ const { Op } = require('sequelize')
  */
 const getByUserId = async (userId) => {
     try {
-        let playlists = utils.parseSafe(await model[Constants.Name].findAll({
+        console.log('here');
+        let playlists = utils.parseSafe(await models[Constants.Name].findAll({
             where: {
-                userId: parseInt(userId)
-            }
+                userId: parseInt(userId),
+            },
+            include: [models.Movie]
         }))
         return utils.classResponse(true, playlists, '')
     } catch (err) {
@@ -30,9 +32,9 @@ const getByUserId = async (userId) => {
  * @param {*} name 
  * @returns 
  */
-const checkValidName = async (userId, name) => {
+const playlistNameExists = async (userId, name) => {
     try {
-        let playlist = utils.parseSafe(await model[Constants.Name].findOne({
+        let playlist = utils.parseSafe(await models[Constants.Name].findOne({
             where: {
                 userId: parseInt(userId),
                 name: {
@@ -46,24 +48,30 @@ const checkValidName = async (userId, name) => {
     }
 }
 
+/**
+ * Gets all details of playlist including the movies in it
+ * @param {*} id of playlist
+ * @returns 
+ */
 const playlistDetails = async (id) => {
     try {
-        let playlist = utils.parseSafe(await model[Constants.Name].findOne({
+        let playlist = utils.parseSafe(await models[Constants.Name].findOne({
             where: {
-                id: parseInt(id)
+                id: parseInt(id),
             },
             include: [
-                model.Movie,
+                models.Movie,
             ]
         }))
         return utils.classResponse(true, playlist, '')
     } catch (err) {
+        console.log(err);
         return utils.classResponse(false, {}, err)
     }
 }
 
 module.exports = {
     getByUserId,
-    checkValidName,
+    playlistNameExists,
     playlistDetails
 }

@@ -7,11 +7,7 @@ const path = require('path');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
-app.use(express.static(path.join(__dirname, 'public')));
-
-require(__dirname + '/routes/').forEach(function (route) {
-  app.use(route.prefix, route.app);
-});
+app.disable('x-powered-by');
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -21,9 +17,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.send('Helloo World!');
+app.use(express.static(path.join(__dirname, 'public')));
+
+require(__dirname + '/routes/').forEach(function (route) {
+  app.use(route.prefix, route.app);
 });
+
 
 app.use(utils.errorHandler);
 

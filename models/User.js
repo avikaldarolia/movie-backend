@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BIGINT,
       autoIncrement: true,
     },
+    username: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true
+    },
     email: {
       allowNull: false,
       type: DataTypes.STRING,
@@ -26,9 +31,16 @@ module.exports = (sequelize, DataTypes) => {
     deletedAt: {
       type: DataTypes.DATE,
     },
-  });
+  },
+    {
+      paranoid: true,
+      timestamps: true
+    }
+  );
   User.associate = (models) => {
     User.hasMany(models.Playlist, { foreignKey: 'userId' });
+    User.hasMany(models.FriendRequest, { foreignKey: 'senderId', as: 'Sender' })
+    User.hasMany(models.FriendRequest, { foreignKey: 'receiverId', as: 'Receiver' })
   };
   return User;
 };
