@@ -12,6 +12,7 @@ exports.create = utils.asyncMiddleware(async (req, res, next) => {
     let options = {}
     try {
         let data = _.pick(req.body, Constants.CreateAttributes);
+        console.log("data",data);
         if (!data.username || !data.email || !data.password) {
             return utils.sendResponse(req, res, false, {}, errorConstants.invalid_data)
         }
@@ -72,7 +73,6 @@ exports.deleteById = utils.asyncMiddleware(async (req, res, next) => {
 
 exports.search = utils.asyncMiddleware(async (req, res, next) => {
     try {
-        console.log('here');
         console.log(req.body);
         let username = req.body.username
         let response = await UserFunctions.searchUser(username)

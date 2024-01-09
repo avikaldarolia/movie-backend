@@ -28,7 +28,7 @@ app.use(utils.errorHandler);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
+  console.log(`Movie Server app listening at http://localhost:${PORT}`);
 });
 
 
